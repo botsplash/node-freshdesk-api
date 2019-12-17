@@ -3,7 +3,6 @@
 [![Build Status](https://travis-ci.org/arjunkomath/node-freshdesk-api.svg?branch=master)](https://travis-ci.org/arjunkomath/node-freshdesk-api)
 [![codecov](https://codecov.io/gh/arjunkomath/node-freshdesk-api/branch/master/graph/badge.svg)](https://codecov.io/gh/arjunkomath/node-freshdesk-api)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/214a7b2a2b454d5380179427ca5023b6)](https://www.codacy.com/app/arjunkomath/node-freshdesk-api?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=arjunkomath/node-freshdesk-api&amp;utm_campaign=Badge_Grade)
-[![NSP Status](https://nodesecurity.io/orgs/volebo/projects/acba4934-5f94-42cb-80db-d456734626d5/badge)](https://nodesecurity.io/orgs/volebo/projects/acba4934-5f94-42cb-80db-d456734626d5)
 
 Node wrapper for [Freshdesk v2 API](http://developer.freshdesk.com/api/#introduction)
 
@@ -87,6 +86,20 @@ freshdesk.deleteTicket(21, function (err, data, extra) {
 })
 ```
 
+### Ticket attachments
+
+```javascript
+freshdesk.createTicket({
+    description: 'test description',
+    attachments: [
+    	fs.createReadStream('/path/to/file1.ext'),
+    	fs.createReadStream('/path/to/file2.ext')
+    ]
+}, function (err, data) {
+    console.log(err || data)
+})
+```
+
 ### Get a ticket PROMISIfied
 
 _* for promisified version only_
@@ -140,6 +153,7 @@ Callback called with following arguments:
 `extra` is an object with following fields:
 
 * `pageIsLast` - indicates, that the response is generated from the last page, and there is no sense to play with `page` and `per_page` parameters. This parameter is useful for `listXXX` methods, called with pagination
+* `requestId` - value of `x-request-id` header from API response
 
 ## Extended/debugging output
 
@@ -182,6 +196,7 @@ To enable debug info, run your program with environment flags
 - **listAllContacts(filter, callback)** - List All Contact, check list of [filters](http://developer.freshdesk.com/api/#list_all_contacts)
 - **listAllContactFields(callback)** - List All Contact Fields
 - **makeAgent(id, callback)** - Make a contact an Agent, [read more](http://developer.freshdesk.com/api/#make_agent)
+- **filterContacts(query, callback)** - Filter contacts (beta), based on contact fields, [read more](http://developers.freshdesk.com/api/#filter_contacts)
 
 ### Agents
 
@@ -254,7 +269,7 @@ Not implemented: http://developers.freshdesk.com/api/#sla-policies
 
 ### Settings
 
-Not implemented: http://developers.freshdesk.com/api/#settings
+- **getSettings(callback)** - View Helpdesk Settings [read more](http://developers.freshdesk.com/api/#settings)
 
 ## Contributors
 
